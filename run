@@ -1,0 +1,5 @@
+#! /bin/sh
+export HA_PROXY_AUTOMATIONS="automation.test_automation automation.simo_schlafen automation.carl_schlafen"
+export HA_PROXY_BASE_URL="https://ha.home.wille.zone"
+export HA_PROXY_ACCESS_TOKEN_FILE="./.secrets/ACCESS_TOKEN"
+go run .

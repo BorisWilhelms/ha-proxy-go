@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Name}}</title>   
+    <link rel="stylesheet" href="/static/styles/simple.min.css">
+</head>
+<body>
+<header>
+    <h1>{{.Name}}</h1>    
+</header>
+<main>
+{{if .Run}}
+    <img src="/static/assets/done.svg" alt="Done"/>
+{{else}}
+    <form method="post">
+        <button type="submit" style="background: none" asp-page-handler="Run">
+            <img src="/static/assets/run.svg" alt="Run"/>
+        </button>
+    </form>
+{{end}}
+</main>
+</body>
+</html>
