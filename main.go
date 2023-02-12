@@ -83,7 +83,7 @@ func getAutomation(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tmpl := template.Must(template.ParseFiles("templates/index.html"))
-	model := IndexModel{Name: automation.FriendlyName()}
+	model := indexModel{Name: automation.FriendlyName()}
 	tmpl.Execute(w, model)
 }
 
@@ -97,7 +97,7 @@ func postAutomation(w http.ResponseWriter, r *http.Request) {
 
 	ha.CallService("automation", "trigger", automation.Entity_id)
 	tmpl := template.Must(template.ParseFiles("templates/index.html"))
-	model := IndexModel{Name: automation.FriendlyName(), Run: true}
+	model := indexModel{Name: automation.FriendlyName(), Run: true}
 	tmpl.Execute(w, model)
 }
 
@@ -108,4 +108,9 @@ func contains(s []string, e string) bool {
 		}
 	}
 	return false
+}
+
+type indexModel struct {
+	Name string
+	Run  bool
 }
