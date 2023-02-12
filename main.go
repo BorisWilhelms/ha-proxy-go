@@ -21,6 +21,9 @@ var (
 func main() {
 	viper.SetEnvPrefix("HA_PROXY")
 	viper.SetDefault("LISTEN", ":3000")
+	viper.SetConfigType("toml")
+	viper.SetConfigFile(".env")
+	viper.ReadInConfig()
 	viper.AutomaticEnv()
 
 	if _, err := os.Stat(viper.GetString("ACCESS_TOKEN_FILE")); errors.Is(err, os.ErrNotExist) {

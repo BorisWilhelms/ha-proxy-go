@@ -11,9 +11,6 @@
             "mode": "auto",
             "program": "/workspaces/ha-proxy-go/",
             "env": {
-                "HA_PROXY_AUTOMATIONS": "automation.test_automation automation.simo_schlafen automation.carl_schlafen",
-                "HA_PROXY_BASE_URL": "https://ha.home.wille.zone",
-                "HA_PROXY_ACCESS_TOKEN_FILE": "./.secrets/ACCESS_TOKEN"
             }
         }
     ]
