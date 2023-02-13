@@ -8,15 +8,13 @@ import (
 	"text/template"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/spf13/viper"
 )
 
 func (server Server) automationCtx(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		automation := chi.URLParam(r, "automation")
-		automations := viper.GetStringSlice("AUTOMATIONS")
 
-		if !contains(automations, automation) {
+		if !contains(server.Automations, automation) {
 			log.Println("Automation not found in allowed autiomations:", automation)
 			http.Error(w, "automation not found", http.StatusNotFound)
 			return

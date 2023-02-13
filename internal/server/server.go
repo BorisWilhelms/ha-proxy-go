@@ -10,6 +10,7 @@ import (
 
 type Server struct {
 	Homeassistant ha.HomeAssistant
+	Automations   []string
 }
 
 func (server Server) Listen(addr string) {
