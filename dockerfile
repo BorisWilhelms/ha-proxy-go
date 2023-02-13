@@ -6,10 +6,9 @@ COPY go.mod ./
 COPY go.sum ./
 RUN go mod download
 
-COPY *.go ./
-COPY ha ./ha
+COPY . ./
 
-RUN go build -o /ha-proxy-go
+RUN go build ./cmd/ha-proxy-go
 
 FROM alpine:3.17 as runtime
 
@@ -18,9 +17,8 @@ RUN adduser --disabled-password --no-create-home app
 USER app
 WORKDIR /app
 
-COPY --from=build /ha-proxy-go .
-COPY templates ./templates
-COPY wwwroot ./wwwroot
+COPY --from=build /app/ha-proxy-go .
+COPY web ./web
 
 EXPOSE 3000
 ENTRYPOINT ["/app/ha-proxy-go"]
