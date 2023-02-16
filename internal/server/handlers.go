@@ -3,6 +3,7 @@ package server
 import (
 	"BorisWilhelms/ha-proxy-go/pkg/ha"
 	"context"
+	"io"
 	"log"
 	"net/http"
 	"text/template"
@@ -33,9 +34,7 @@ func (server Server) getAutomation(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tmpl := template.Must(template.ParseFiles("web/template/index.html"))
-	model := indexModel{Name: automation.FriendlyName()}
-	tmpl.Execute(w, model)
+	renderIndex(w, indexModel{Name: automation.FriendlyName()})
 }
 
 func (server Server) postAutomation(w http.ResponseWriter, r *http.Request) {
@@ -47,8 +46,11 @@ func (server Server) postAutomation(w http.ResponseWriter, r *http.Request) {
 	}
 
 	server.Homeassistant.CallService("automation", "trigger", automation.Entity_id)
+	renderIndex(w, indexModel{Name: automation.FriendlyName(), Run: true})
+}
+
+func renderIndex(w io.Writer, model any) {
 	tmpl := template.Must(template.ParseFiles("web/template/index.html"))
-	model := indexModel{Name: automation.FriendlyName(), Run: true}
 	tmpl.Execute(w, model)
 }
 

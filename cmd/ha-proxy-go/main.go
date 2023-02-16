@@ -34,9 +34,14 @@ func main() {
 
 	homeassistant = ha.HomeAssistant{
 		BaseUrl:     viper.GetString("BASE_URL"),
-		AccessToken: viper.GetString("ACCESS_TOKEN")}
+		AccessToken: viper.GetString("ACCESS_TOKEN"),
+	}
 
-	server := server.Server{Homeassistant: homeassistant, Automations: viper.GetStringSlice("automations")}
+	server := server.Server{
+		Homeassistant: homeassistant,
+		Automations:   viper.GetStringSlice("automations"),
+	}
+
 	addr := viper.GetString("LISTEN")
 	log.Println("Listening on:", addr)
 	server.Listen(addr)
