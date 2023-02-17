@@ -3,6 +3,7 @@ package server
 import (
 	"BorisWilhelms/ha-proxy-go/pkg/ha"
 	"net/http"
+	"text/template"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -11,6 +12,7 @@ import (
 type Server struct {
 	Homeassistant ha.HomeAssistant
 	Automations   []string
+	Templates     *template.Template
 }
 
 func (server Server) Listen(addr string) {

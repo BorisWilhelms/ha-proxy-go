@@ -6,6 +6,7 @@ import (
 	"errors"
 	"log"
 	"os"
+	"text/template"
 
 	"github.com/spf13/viper"
 )
@@ -40,6 +41,7 @@ func main() {
 	server := server.Server{
 		Homeassistant: homeassistant,
 		Automations:   viper.GetStringSlice("automations"),
+		Templates:     template.Must(template.ParseGlob("web/template/*")),
 	}
 
 	addr := viper.GetString("LISTEN")

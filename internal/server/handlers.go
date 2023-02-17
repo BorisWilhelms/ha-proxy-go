@@ -6,7 +6,6 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"text/template"
 
 	"github.com/go-chi/chi/v5"
 )
@@ -34,7 +33,7 @@ func (server Server) getAutomation(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	renderIndex(w, indexModel{Name: automation.FriendlyName()})
+	server.renderIndex(w, indexModel{Name: automation.FriendlyName()})
 }
 
 func (server Server) postAutomation(w http.ResponseWriter, r *http.Request) {
@@ -45,12 +44,12 @@ func (server Server) postAutomation(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	server.Homeassistant.CallService("automation", "trigger", automation.Entity_id)
-	renderIndex(w, indexModel{Name: automation.FriendlyName(), Run: true})
+	res := server.Homeassistant.CallService("automation", "trigger", automation.Entity_id)
+	server.renderIndex(w, indexModel{Name: automation.FriendlyName(), Run: true, Error: !res})
 }
 
-func renderIndex(w io.Writer, model any) {
-	tmpl := template.Must(template.ParseFiles("web/template/index.html"))
+func (server Server) renderIndex(w io.Writer, model any) {
+	tmpl := server.Templates.Lookup("index.html")
 	tmpl.Execute(w, model)
 }
 

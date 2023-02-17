@@ -15,12 +15,17 @@ type HomeAssistant struct {
 	AccessToken string
 }
 
-func (ha HomeAssistant) CallService(service string, action string, entity string) {
+func (ha HomeAssistant) CallService(service string, action string, entity string) bool {
 	data, _ := json.Marshal(map[string]string{"entity_id": entity})
 	reader := bytes.NewReader(data)
 	req := ha.createRequest(http.MethodPost, fmt.Sprintf("services/%s/%s", service, action), reader)
 
-	_, _ = doCall(req)
+	res, err := doCall(req)
+	if err != nil {
+		return false
+	}
+	defer res.Body.Close()
+	return res.StatusCode == 200
 }
 
 func (ha HomeAssistant) GetState(entityId string) Entity {
@@ -29,6 +34,7 @@ func (ha HomeAssistant) GetState(entityId string) Entity {
 	if err != nil {
 		return Entity{}
 	}
+	defer res.Body.Close()
 
 	var e Entity
 	err = json.NewDecoder(res.Body).Decode(&e)

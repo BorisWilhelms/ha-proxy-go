@@ -13,7 +13,11 @@
 </header>
 <main>
 {{if .Run}}
+    {{if .Error}}
+    <p>An error happend. Please try again later.</p>
+    {{else}}
     <img src="/static/assets/done.svg" alt="Done"/>
+    {{end}}
 {{else}}
     <form method="post">
         <button type="submit" style="background: none" asp-page-handler="Run">
