@@ -3,6 +3,7 @@ package main
 import (
 	"BorisWilhelms/ha-proxy-go/internal/server"
 	"BorisWilhelms/ha-proxy-go/pkg/ha"
+	"BorisWilhelms/ha-proxy-go/web"
 	"errors"
 	"log"
 	"os"
@@ -41,7 +42,8 @@ func main() {
 	server := server.Server{
 		Homeassistant: homeassistant,
 		Automations:   viper.GetStringSlice("automations"),
-		Templates:     template.Must(template.ParseGlob("web/template/*")),
+		Templates:     template.Must(template.ParseFS(web.Templates, "template/*.html")),
+		Static:        web.Static,
 	}
 
 	addr := viper.GetString("LISTEN")

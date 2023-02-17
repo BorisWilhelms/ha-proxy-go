@@ -10,7 +10,8 @@
             "request": "launch",
             "mode": "auto",
             "program": "/workspaces/ha-proxy-go/cmd/ha-proxy-go",
-            "cwd": "/workspaces/ha-proxy-go"
+            "cwd": "/workspaces/ha-proxy-go",
+            "buildFlags": "-tags debug"
         }
     ]
 }

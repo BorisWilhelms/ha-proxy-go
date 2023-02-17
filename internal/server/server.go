@@ -2,6 +2,7 @@ package server
 
 import (
 	"BorisWilhelms/ha-proxy-go/pkg/ha"
+	"io/fs"
 	"net/http"
 	"text/template"
 
@@ -13,6 +14,7 @@ type Server struct {
 	Homeassistant ha.HomeAssistant
 	Automations   []string
 	Templates     *template.Template
+	Static        fs.FS
 }
 
 func (server Server) Listen(addr string) {
@@ -25,7 +27,7 @@ func (server Server) Listen(addr string) {
 		r.Post("/", server.postAutomation)
 	})
 
-	fs := http.FileServer(http.Dir("web/static"))
+	fs := http.FileServer(http.FS(server.Static))
 	router.Handle("/static/*", http.StripPrefix("/static/", fs))
 
 	http.ListenAndServe(addr, router)

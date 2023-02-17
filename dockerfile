@@ -18,7 +18,6 @@ USER app
 WORKDIR /app
 
 COPY --from=build /app/ha-proxy-go .
-COPY web ./web
 
 EXPOSE 3000
 ENTRYPOINT ["/app/ha-proxy-go"]
