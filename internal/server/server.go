@@ -28,7 +28,7 @@ func (server Server) Listen(addr string) {
 	})
 
 	fs := http.FileServer(http.FS(server.Static))
-	router.Handle("/static/*", http.StripPrefix("/static/", fs))
+	router.Handle("/static/*", fs)
 
 	http.ListenAndServe(addr, router)
 }
