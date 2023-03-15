@@ -11,7 +11,7 @@ import (
 )
 
 type Server struct {
-	Homeassistant ha.HomeAssistant
+	Homeassistant *ha.HomeAssistant
 	Automations   []string
 	Templates     *template.Template
 	Static        fs.FS

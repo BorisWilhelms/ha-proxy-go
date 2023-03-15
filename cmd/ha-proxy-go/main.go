@@ -13,7 +13,7 @@ import (
 )
 
 var (
-	homeassistant ha.HomeAssistant
+	homeassistant *ha.HomeAssistant
 )
 
 func main() {
@@ -34,10 +34,7 @@ func main() {
 	}
 	viper.Set("ACCESS_TOKEN", string(data))
 
-	homeassistant = ha.HomeAssistant{
-		BaseUrl:     viper.GetString("BASE_URL"),
-		AccessToken: viper.GetString("ACCESS_TOKEN"),
-	}
+	homeassistant = ha.NewHomeAssistant(viper.GetString("BASE_URL"), viper.GetString("ACCESS_TOKEN"))
 
 	server := server.Server{
 		Homeassistant: homeassistant,
