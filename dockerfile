@@ -1,4 +1,4 @@
-FROM golang:1.20-alpine AS build
+FROM golang:alpine AS build
 
 WORKDIR /app
 
@@ -10,7 +10,7 @@ COPY . ./
 
 RUN go build ./cmd/ha-proxy-go
 
-FROM alpine:3.17 as runtime
+FROM alpine:3 as runtime
 
 RUN adduser --disabled-password --no-create-home app
 
